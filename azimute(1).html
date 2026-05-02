@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AZIMUTE — Tours & Transfers Privados em Portugal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #B8891E;
+  --gold-dark: #8C6614;
+  --gold-light: #E8C96A;
+  --gold-pale: #FDF8EE;
+  --white: #FFFFFF;
+  --off-white: #FAF8F4;
+  --dark: #1A1208;
+  --mid: #4A3C28;
+  --muted: #8A7A60;
+  --border: rgba(184,137,30,0.15);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #fff;
+  color: var(--dark);
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ——— SCROLLBAR ——— */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:#fff; }
+::-webkit-scrollbar-thumb { background: var(--gold-light); }
+
+/* ——— NAV ——— */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index:999;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw;
+  height: 76px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+.nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.06); }
+.nav-brand { display:flex; flex-direction:column; line-height:1; }
+.nav-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+}
+.nav-brand-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.nav-links { display:flex; align-items:center; gap:2.5rem; list-style:none; }
+.nav-links a {
+  font-size: 0.78rem; font-weight:400; letter-spacing:0.12em;
+  text-transform:uppercase; text-decoration:none;
+  color: var(--mid); transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  background: var(--gold); color:#fff;
+  padding:0.6rem 1.6rem;
+  font-size:0.75rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  text-decoration:none; border:none; cursor:pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-cta:hover { background: var(--gold-dark); transform:translateY(-1px); }
+.nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+.nav-hamburger span { display:block; width:22px; height:1.5px; background:var(--dark); transition:0.3s; }
+
+/* ——— HERO ——— */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  background: var(--off-white);
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background: 
+    linear-gradient(135deg, rgba(250,248,244,0.98) 0%, rgba(250,248,244,0.90) 40%, rgba(250,248,244,0.60) 100%),
+    url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1800&q=80') center/cover no-repeat;
+}
+.hero-content {
+  position:relative; z-index:2;
+  max-width:1100px; width:100%;
+  margin:0 auto; padding:0 5vw;
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+}
+.hero-text { }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background:rgba(184,137,30,0.1); border:1px solid rgba(184,137,30,0.25);
+  padding:0.35rem 1rem; margin-bottom:1.8rem;
+  font-size:0.65rem; font-weight:500; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold);
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight:500; line-height:1.12; color:var(--dark);
+  margin-bottom:1.5rem;
+}
+.hero-title em { font-style:italic; color:var(--gold); }
+.hero-desc {
+  font-size:0.98rem; line-height:1.85; color:var(--mid);
+  margin-bottom:2.5rem; max-width:440px;
+}
+.hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+.btn-primary {
+  background:var(--gold); color:#fff;
+  padding:0.9rem 2.2rem;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  text-decoration:none; border:none; cursor:pointer;
+  transition:background 0.2s, transform 0.15s;
+  display:inline-block;
+}
+.btn-primary:hover { background:var(--gold-dark); transform:translateY(-2px); }
+.btn-secondary {
+  background:transparent; color:var(--dark);
+  padding:0.9rem 2.2rem;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  text-decoration:none; border:1.5px solid rgba(26,18,8,0.25); cursor:pointer;
+  transition:border-color 0.2s, color 0.2s;
+  display:inline-block;
+}
+.btn-secondary:hover { border-color:var(--gold); color:var(--gold); }
+
+.hero-card {
+  background:#fff;
+  border:1px solid var(--border);
+  padding:2.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+.hero-card-title {
+  font-family:'Playfair Display',serif; font-size:1rem; font-weight:500;
+  color:var(--dark); margin-bottom:1.5rem;
+  padding-bottom:1rem; border-bottom:1px solid var(--border);
+}
+.hero-stats { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.hero-stat-num {
+  font-family:'Playfair Display',serif; font-size:2rem; font-weight:500; color:var(--gold);
+  display:block; line-height:1;
+}
+.hero-stat-label { font-size:0.72rem; color:var(--muted); margin-top:0.3rem; letter-spacing:0.05em; }
+.hero-wa {
+  margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border);
+  display:flex; align-items:center; gap:0.8rem;
+}
+.hero-wa-btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background:#25D366; color:#fff;
+  padding:0.65rem 1.2rem;
+  font-size:0.75rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+  text-decoration:none; transition:background 0.2s; font-family:'DM Sans',sans-serif;
+  flex:1; justify-content:center;
+}
+.hero-wa-btn:hover { background:#1ebe5d; }
+.hero-wa-call {
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); padding:0.65rem 1rem;
+  font-size:0.75rem; color:var(--gold); text-decoration:none; font-weight:500;
+  transition:border-color 0.2s, background 0.2s; font-family:'DM Sans',sans-serif;
+}
+.hero-wa-call:hover { border-color:var(--gold); background:rgba(184,137,30,0.05); }
+
+/* ——— TRUST BAR ——— */
+.trust-bar {
+  background:var(--dark); padding:1.2rem 5vw;
+  display:flex; align-items:center; justify-content:center; gap:4rem; flex-wrap:wrap;
+}
+.trust-item {
+  display:flex; align-items:center; gap:0.6rem;
+  font-size:0.75rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase;
+  color:rgba(255,255,255,0.7);
+}
+.trust-item svg { opacity:0.6; }
+
+/* ——— SECTION SHARED ——— */
+.section { padding:7rem 5vw; }
+.section-alt { background:var(--off-white); }
+.section-header { margin-bottom:4rem; }
+.section-label {
+  font-size:0.65rem; font-weight:500; letter-spacing:0.35em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:0.8rem; display:block;
+}
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.9rem,3.5vw,2.9rem); font-weight:500; line-height:1.2;
+  color:var(--dark);
+}
+.section-title em { font-style:italic; color:var(--gold); }
+.section-subtitle { font-size:0.95rem; color:var(--muted); line-height:1.8; max-width:520px; margin-top:0.8rem; }
+
+/* ——— TOURS ——— */
+.tours-intro { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3.5rem; flex-wrap:wrap; gap:1.5rem; }
+.tours-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+
+.tour-card {
+  background:#fff; border:1px solid var(--border);
+  display:flex; flex-direction:column;
+  transition:box-shadow 0.3s, transform 0.3s;
+  cursor:pointer;
+}
+.tour-card:hover {
+  box-shadow:0 16px 50px rgba(0,0,0,0.1);
+  transform:translateY(-4px);
+}
+.tour-card-img {
+  height:200px; overflow:hidden; position:relative;
+  background:var(--gold-pale);
+  display:flex; align-items:center; justify-content:center;
+}
+.tour-card-img-inner {
+  width:100%; height:100%;
+  background-size:cover; background-position:center;
+  transition:transform 0.5s;
+}
+.tour-card:hover .tour-card-img-inner { transform:scale(1.05); }
+.tour-card-badge {
+  position:absolute; top:1rem; left:1rem;
+  background:var(--gold); color:#fff;
+  font-size:0.6rem; font-weight:500; letter-spacing:0.15em; text-transform:uppercase;
+  padding:0.3rem 0.7rem;
+}
+.tour-card-badge.two-days { background:var(--dark); }
+.tour-card-body { padding:1.8rem; flex:1; display:flex; flex-direction:column; }
+.tour-card-dest {
+  font-size:0.65rem; font-weight:500; letter-spacing:0.25em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:0.5rem;
+}
+.tour-card-title {
+  font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:500;
+  color:var(--dark); margin-bottom:0.7rem; line-height:1.2;
+}
+.tour-card-meta {
+  display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;
+}
+.tour-card-meta span {
+  font-size:0.72rem; color:var(--muted);
+  display:flex; align-items:center; gap:0.3rem;
+}
+.tour-card-desc {
+  font-size:0.83rem; line-height:1.75; color:var(--mid);
+  margin-bottom:1.2rem; flex:1;
+}
+.tour-card-extras {
+  background:var(--gold-pale); border-left:2px solid var(--gold);
+  padding:0.7rem 0.9rem; margin-bottom:1.4rem; font-size:0.75rem; color:var(--mid);
+  line-height:1.7;
+}
+.tour-card-extras strong { color:var(--gold-dark); font-weight:500; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; display:block; margin-bottom:0.3rem; }
+.tour-card-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top:1rem; border-top:1px solid var(--border);
+}
+.tour-card-from { font-size:0.7rem; color:var(--muted); }
+.tour-card-from strong { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--dark); font-weight:500; display:block; }
+.tour-card-btn {
+  background:var(--gold); color:#fff;
+  padding:0.55rem 1.3rem;
+  font-size:0.72rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  border:none; cursor:pointer; font-family:'DM Sans',sans-serif;
+  transition:background 0.2s;
+}
+.tour-card-btn:hover { background:var(--gold-dark); }
+
+/* ——— TRANSFERS ——— */
+.transfers-grid {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
+  background:var(--border); border:1px solid var(--border);
+}
+.transfer-tile {
+  background:#fff; padding:2rem 1.5rem;
+  display:flex; flex-direction:column; align-items:center; text-align:center; gap:0.7rem;
+  cursor:pointer; transition:background 0.2s;
+}
+.transfer-tile:hover { background:var(--gold-pale); }
+.transfer-tile-icon { font-size:1.8rem; }
+.transfer-tile-name {
+  font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:400; color:var(--dark);
+}
+.transfer-tile-km { font-size:0.68rem; color:var(--muted); letter-spacing:0.05em; }
+.transfer-tile-tag {
+  font-size:0.6rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--gold); margin-top:auto;
+}
+
+/* ——— WHY US ——— */
+.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; }
+.why-item { }
+.why-icon {
+  width:50px; height:50px; background:rgba(184,137,30,0.08); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem; margin-bottom:1.2rem;
+}
+.why-title { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:500; color:var(--dark); margin-bottom:0.6rem; }
+.why-text { font-size:0.83rem; line-height:1.8; color:var(--muted); }
+
+/* ——— TESTIMONIALS ——— */
+.testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+.testimonial {
+  background:#fff; border:1px solid var(--border);
+  padding:2rem; display:flex; flex-direction:column; gap:1rem;
+}
+.testimonial-stars { color:var(--gold); font-size:0.85rem; letter-spacing:0.2em; }
+.testimonial-text {
+  font-family:'Playfair Display',serif; font-style:italic;
+  font-size:0.95rem; line-height:1.75; color:var(--dark); flex:1;
+}
+.testimonial-author { display:flex; align-items:center; gap:0.8rem; }
+.testimonial-avatar {
+  width:38px; height:38px; border-radius:50%;
+  background:linear-gradient(135deg, var(--gold-light), var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Playfair Display',serif; color:#fff; font-size:0.85rem; font-weight:700; flex-shrink:0;
+}
+.testimonial-name { font-size:0.8rem; font-weight:500; color:var(--dark); }
+.testimonial-trip { font-size:0.7rem; color:var(--muted); margin-top:0.1rem; }
+
+/* ——— BOOKING ——— */
+.booking-wrap {
+  display:grid; grid-template-columns:5fr 4fr; gap:5rem; align-items:start;
+}
+.booking-intro { }
+.booking-features { margin-top:2.5rem; display:flex; flex-direction:column; gap:1rem; }
+.booking-feature { display:flex; align-items:flex-start; gap:0.9rem; }
+.booking-feature-icon {
+  width:36px; height:36px; background:rgba(184,137,30,0.08); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0;
+}
+.booking-feature-title { font-size:0.83rem; font-weight:500; color:var(--dark); margin-bottom:0.2rem; }
+.booking-feature-text { font-size:0.77rem; color:var(--muted); line-height:1.6; }
+
+.booking-panel {
+  background:#fff; border:1px solid var(--border);
+  box-shadow:0 12px 50px rgba(0,0,0,0.07);
+}
+.booking-panel-header {
+  background:var(--dark); padding:1.5rem 2rem;
+  font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:500; color:#fff;
+}
+.booking-panel-body { padding:2rem; }
+.cal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+.cal-month-label { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--dark); }
+.cal-nav {
+  background:none; border:1px solid var(--border); color:var(--gold);
+  width:28px; height:28px; cursor:pointer; font-size:0.9rem; transition:background 0.15s;
+}
+.cal-nav:hover { background:var(--gold-pale); }
+.cal-weekdays { display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:3px; }
+.cal-wd { text-align:center; font-size:0.58rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:0.4rem 0; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+.cal-cell {
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  font-size:0.75rem; cursor:pointer; color:var(--mid); border-radius:2px; position:relative;
+  transition:background 0.15s, color 0.15s;
+}
+.cal-cell:hover:not(.empty):not(.past) { background:rgba(184,137,30,0.12); color:var(--gold); }
+.cal-cell.past { opacity:0.25; cursor:not-allowed; }
+.cal-cell.empty { cursor:default; }
+.cal-cell.today { color:var(--gold); font-weight:600; }
+.cal-cell.today::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:3px; height:3px; border-radius:50%; background:var(--gold); }
+.cal-cell.selected { background:var(--gold); color:#fff; font-weight:600; }
+.cal-cell.selected::after { display:none; }
+.cal-display {
+  margin-top:1rem; padding:0.65rem 0.9rem;
+  background:var(--gold-pale); border-left:2px solid var(--gold);
+  font-size:0.75rem; color:var(--mid); min-height:36px;
+}
+.form-sep { height:1px; background:var(--border); margin:1.2rem 0; }
+.frow { margin-bottom:1rem; }
+.frow label {
+  display:block; font-size:0.62rem; font-weight:500; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:0.35rem;
+}
+.frow input, .frow select, .frow textarea {
+  width:100%; background:var(--off-white); border:1px solid rgba(184,137,30,0.2);
+  color:var(--dark); padding:0.7rem 0.9rem;
+  font-family:'DM Sans',sans-serif; font-size:0.83rem; outline:none;
+  transition:border-color 0.2s; -webkit-appearance:none; appearance:none;
+}
+.frow input::placeholder { color:var(--muted); }
+.frow input:focus, .frow select:focus, .frow textarea:focus { border-color:var(--gold); }
+.frow select option { background:#fff; color:var(--dark); }
+.frow textarea { resize:vertical; min-height:70px; }
+.frow-2 { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+.form-submit {
+  width:100%; background:var(--gold); color:#fff;
+  padding:0.9rem; border:none; cursor:pointer;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  transition:background 0.2s; margin-top:0.5rem;
+}
+.form-submit:hover { background:var(--gold-dark); }
+
+/* ——— CONTACT ——— */
+.contact-strip {
+  background:var(--dark); padding:5rem 5vw;
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+}
+.contact-left { }
+.contact-title {
+  font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:500; color:#fff; line-height:1.2;
+  margin-bottom:0.8rem;
+}
+.contact-title em { font-style:italic; color:var(--gold-light); }
+.contact-sub { font-size:0.9rem; color:rgba(255,255,255,0.6); line-height:1.7; }
+.contact-right { display:flex; flex-direction:column; gap:1.2rem; }
+.contact-detail {
+  display:flex; align-items:center; gap:1rem;
+  padding:1.2rem 1.5rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+}
+.contact-detail-icon { font-size:1.2rem; flex-shrink:0; }
+.contact-detail-label { font-size:0.6rem; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+.contact-detail-value { font-family:'Playfair Display',serif; font-size:1.1rem; color:#fff; margin-top:0.1rem; }
+.contact-detail-value a { color:inherit; text-decoration:none; }
+.contact-detail-value a:hover { color:var(--gold-light); }
+.contact-wa-big {
+  display:flex; align-items:center; justify-content:center; gap:0.7rem;
+  background:#25D366; color:#fff;
+  padding:1rem 1.5rem;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  text-decoration:none; transition:background 0.2s;
+}
+.contact-wa-big:hover { background:#1ebe5d; }
+
+/* ——— FOOTER ——— */
+footer {
+  background:var(--off-white); border-top:1px solid var(--border);
+  padding:2.5rem 5vw;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+}
+.footer-left .footer-brand { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--gold); }
+.footer-left .footer-sub { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-top:2px; }
+.footer-right { font-size:0.72rem; color:var(--muted); text-align:right; line-height:1.8; }
+
+/* ——— MODAL ——— */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(26,18,8,0.5); backdrop-filter:blur(6px);
+  z-index:2000; align-items:center; justify-content:center; padding:1rem;
+}
+.modal-overlay.open { display:flex; }
+.modal-box {
+  background:#fff; max-width:480px; width:100%; padding:2.5rem; position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.2);
+  animation:modalIn 0.25s ease;
+}
+@keyframes modalIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.modal-close {
+  position:absolute; top:1rem; right:1.2rem;
+  background:none; border:none; font-size:1.4rem; color:var(--muted); cursor:pointer;
+  transition:color 0.2s;
+}
+.modal-close:hover { color:var(--gold); }
+.modal-tag { font-size:0.62rem; font-weight:500; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem; }
+.modal-title { font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:500; color:var(--dark); margin-bottom:0.5rem; }
+.modal-sub { font-size:0.83rem; color:var(--muted); line-height:1.7; margin-bottom:1.5rem; }
+.modal-actions { display:flex; gap:0.8rem; flex-wrap:wrap; }
+
+/* ——— RESPONSIVE MOBILE-FIRST ——— */
+
+/* Tablet 1024px */
+@media(max-width:1024px){
+  .hero-content { grid-template-columns:1fr; gap:2.5rem; }
+  .hero-card { display:none; }
+  .tours-grid { grid-template-columns:repeat(2,1fr); }
+  .booking-wrap { grid-template-columns:1fr; gap:2.5rem; }
+  .contact-strip { grid-template-columns:1fr; gap:2.5rem; }
+  .tc-grid { grid-template-columns:repeat(2,1fr); }
+}
+
+/* Mobile 768px */
+@media(max-width:768px){
+  /* NAV */
+  .nav { padding:0 4vw; height:64px; }
+  .nav-links, .nav-cta-wrap { display:none; }
+  .nav-hamburger { display:flex; }
+  .nav-brand-name { font-size:1.2rem; }
+
+  /* HERO */
+  .hero { padding:5rem 4vw 3rem; min-height:auto; }
+  .hero-title { font-size:clamp(3rem,14vw,5rem); }
+  .hero-desc { font-size:0.9rem; }
+  .hero-actions { flex-direction:column; }
+  .btn-primary, .btn-secondary { text-align:center; padding:1rem; width:100%; }
+
+  /* TRUST BAR */
+  .trust-bar { gap:1rem 2rem; padding:1rem 4vw; justify-content:flex-start; }
+  .trust-item { font-size:0.68rem; }
+
+  /* SECTIONS */
+  .section { padding:3.5rem 4vw; }
+  .section-title { font-size:1.8rem; }
+  .tours-intro { flex-direction:column; align-items:flex-start; gap:1rem; }
+
+  /* TOURS COMPACT CARDS */
+  .tc-grid { grid-template-columns:1fr; gap:0.6rem; }
+  .tc { padding:1rem 1.1rem; }
+  .tc-num { font-size:1.3rem; width:1.8rem; }
+  .tc-name { font-size:1rem; }
+  .tc-btns button { padding:0.4rem 0.9rem; font-size:0.65rem; }
+
+  /* TRANSFERS */
+  .transfers-grid { grid-template-columns:repeat(2,1fr); }
+  .transfer-tile { padding:1.2rem 1rem; }
+  .transfer-tile-icon { font-size:1.4rem; }
+  .transfer-tile-name { font-size:1rem; }
+
+  /* WHY / TESTIMONIALS */
+  .why-grid { grid-template-columns:1fr; gap:1.8rem; }
+  .testimonials-grid { grid-template-columns:1fr; }
+
+  /* BOOKING */
+  .booking-wrap { gap:2rem; }
+  .booking-panel-body { padding:1.2rem; }
+  .frow-2 { grid-template-columns:1fr 1fr; }
+
+  /* CONTACT */
+  .contact-strip { padding:3.5rem 4vw; }
+  .contact-title { font-size:1.7rem; }
+  .contact-card { padding:2rem 1rem; }
+
+  /* FOOTER */
+  footer { padding:2rem 4vw; flex-direction:column; align-items:flex-start; gap:0.5rem; }
+  .footer-right { text-align:left; }
+
+  /* MAP TOOLTIP */
+  #map-tooltip { display:none !important; }
+}
+
+/* Mobile small 480px */
+@media(max-width:480px){
+  .hero-badge { font-size:0.6rem; }
+  .hero-title { font-size:clamp(2.8rem,16vw,4rem); letter-spacing:0.08em; }
+  .trust-bar { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; padding:1.2rem 4vw; }
+  .section { padding:3rem 4vw; }
+  .tc { padding:0.9rem 1rem; gap:0.8rem; }
+  .tc-name { font-size:1rem; }
+  .tc-meta { font-size:0.65rem; }
+  .transfers-grid { grid-template-columns:repeat(2,1fr); gap:1px; }
+  .booking-features { gap:0.8rem; }
+  .frow-2 { grid-template-columns:1fr; }
+  .contact-right { gap:0.8rem; }
+  .contact-detail { padding:0.9rem 1rem; }
+  .contact-detail-value { font-size:1rem; }
+
+  /* TOUR DETAIL PANEL */
+  .td-panel { width:100vw; }
+  .td-header { min-height:140px; }
+  .td-header-content { padding:1.5rem 1.2rem 1.2rem; }
+  .td-title { font-size:1.5rem; }
+  .td-body { padding:1.2rem; }
+  .td-calc { flex-direction:column; }
+  .td-calc-divider { width:100%; height:1px; }
+  .td-calc-right { text-align:left; padding:1rem 1.2rem; }
+  .td-calc-price { font-size:1.8rem; }
+  .td-includes { grid-template-columns:1fr; }
+  .td-cta { flex-direction:column; }
+  .btn-wa-small { justify-content:center; }
+  .td-calc-reserve { font-size:0.75rem; padding:1rem; }
+  .td-close { top:0.8rem; right:0.8rem; font-size:0.65rem; }
+}
+/* ——— ANIMATIONS ——— */
+.fade-in { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="main-nav">
+  <div class="nav-brand">
+    <span class="nav-brand-name">AZIMUTE</span>
+    <span class="nav-brand-sub">by 360 Mobility</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#tours">Tours</a></li>
+    <li><a href="#transfers">Transfers</a></li>
+    <li><a href="#porque-nos">Porquê Nós</a></li>
+    <li><a href="#reservar">Reservar</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-cta-wrap">
+    <a href="#reservar" class="nav-cta">Reservar Agora</a>
+  </div>
+  <div class="nav-hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text fade-in">
+      <div class="hero-badge">
+        <span>●</span> Partida de Lisboa e Arredores · Serviço Privado
+      </div>
+      <h1 class="hero-title">
+        Descubra Portugal<br><em>a seu ritmo</em>
+      </h1>
+      <p class="hero-desc">
+        Tours e transfers privados com partida de Lisboa e arredores. Experiências únicas, condutores experientes e itinerários pensados ao detalhe — para que se concentre apenas em viver o momento.
+      </p>
+      <div class="hero-actions">
+        <a href="#tours" class="btn-primary">Explorar Tours</a>
+        <a href="#reservar" class="btn-secondary">Fazer Reserva</a>
+      </div>
+    </div>
+    <div class="hero-card fade-in" style="transition-delay:0.2s">
+      <div class="hero-card-title">AZIMUTE em números</div>
+      <div class="hero-stats">
+        <div>
+          <span class="hero-stat-num">6</span>
+          <div class="hero-stat-label">Destinos de Tour</div>
+        </div>
+        <div>
+          <span class="hero-stat-num">10</span>
+          <div class="hero-stat-label">Destinos de Transfer</div>
+        </div>
+        <div>
+          <span class="hero-stat-num">100%</span>
+          <div class="hero-stat-label">Privado e Personalizado</div>
+        </div>
+        <div>
+          <span class="hero-stat-num">24/7</span>
+          <div class="hero-stat-label">WhatsApp Disponível</div>
+        </div>
+      </div>
+      <div class="hero-wa">
+        <a href="https://wa.me/351967403285" target="_blank" class="hero-wa-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="tel:+351967403285" class="hero-wa-call">
+          📞 Ligar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Serviço 100% Privado
+  </div>
+  <div class="trust-item">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+    Pontualidade Garantida
+  </div>
+  <div class="trust-item">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    Grupos & Famílias
+  </div>
+  <div class="trust-item">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    WhatsApp 24/7
+  </div>
+  <div class="trust-item">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Partida de Lisboa & Arredores
+  </div>
+</div>
+
+<!-- TOURS -->
+<section class="section" id="tours">
+  <div class="tours-intro">
+    <div class="section-header" style="margin-bottom:0">
+      <span class="section-label">Experiências Exclusivas</span>
+      <h2 class="section-title">Tours <em>Privados</em></h2>
+      <p class="section-subtitle">Itinerários com partida de Lisboa e arredores. Passe o rato sobre cada destino para ver a localização no mapa de Portugal.</p>
+    </div>
+    <a href="#reservar" class="btn-secondary" style="white-space:nowrap">Ver Disponibilidade</a>
+  </div>
+
+  <!-- MAPA TOOLTIP -->
+  <div id="map-tooltip">
+    <div id="map-tooltip-inner">
+      <svg id="portugal-svg" viewBox="0 0 220 340" xmlns="http://www.w3.org/2000/svg">
+        <!-- Portugal continental simplified path -->
+        <path id="pt-shape" d="M60,10 L80,8 L105,12 L125,10 L145,18 L158,30 L165,48 L170,65 L175,85 L178,105 L180,125 L178,145 L175,162 L170,178 L165,195 L160,212 L155,228 L148,242 L140,255 L130,265 L118,272 L105,278 L92,282 L80,285 L68,284 L58,280 L50,273 L44,263 L40,252 L38,240 L38,228 L40,215 L42,202 L44,190 L44,177 L42,165 L40,153 L38,140 L36,128 L35,115 L35,102 L37,89 L40,77 L44,65 L50,53 L55,40 L58,28 Z" fill="#e8f4e8" stroke="#4a7c4a" stroke-width="1.5"/>
+        <!-- Dot marker (repositioned by JS) -->
+        <circle id="map-dot" cx="0" cy="0" r="7" fill="#B8891E" stroke="#fff" stroke-width="2" opacity="0"/>
+        <circle id="map-dot-pulse" cx="0" cy="0" r="7" fill="transparent" stroke="#B8891E" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" from="7" to="18" dur="1.2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" from="0.8" to="0" dur="1.2s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Lisboa dot (always visible, grey) -->
+        <circle cx="52" cy="222" r="4" fill="#aaa" stroke="#fff" stroke-width="1.5"/>
+        <text x="58" y="226" font-size="8" fill="#666" font-family="sans-serif">Lisboa</text>
+      </svg>
+      <div id="map-dest-label"></div>
+    </div>
+  </div>
+
+  <!-- COMPACT TOUR CARDS -->
+  <div class="tc-grid">
+
+    <div class="tc fade-in" data-dest="Fátima" data-x="72" data-y="168">
+      <div class="tc-num">01</div>
+      <div class="tc-body">
+        <div class="tc-tag">Tour Privado</div>
+        <div class="tc-name">Fátima</div>
+        <div class="tc-meta">⏱ 6–7h ou 11–12h &nbsp;·&nbsp; ~130 km · ~1h30</div>
+        <div class="tc-extra">+ Batalha · Nazaré · Óbidos</div>
+        <div class="tc-btns">
+          <button onclick="openTour('fatima-meio')">Meio Dia</button>
+          <button onclick="openTour('fatima-dia')">Dia Completo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc fade-in" style="transition-delay:.06s" data-dest="Sintra" data-x="44" data-y="210">
+      <div class="tc-num">02</div>
+      <div class="tc-body">
+        <div class="tc-tag">Tour Privado</div>
+        <div class="tc-name">Sintra</div>
+        <div class="tc-meta">⏱ 6–7h &nbsp;·&nbsp; ~30 km · ~30min</div>
+        <div class="tc-extra">+ Cabo da Roca · Cascais · Estoril</div>
+        <div class="tc-btns"><button onclick="openTour('sintra')">Ver Detalhes</button></div>
+      </div>
+    </div>
+
+    <div class="tc fade-in" style="transition-delay:.12s" data-dest="Évora" data-x="105" data-y="218">
+      <div class="tc-num">03</div>
+      <div class="tc-body">
+        <div class="tc-tag">Tour Privado</div>
+        <div class="tc-name">Évora</div>
+        <div class="tc-meta">⏱ 6–7h &nbsp;·&nbsp; ~130 km · ~1h30</div>
+        <div class="tc-extra">+ Monsaraz · Cromeleque · Vinhas</div>
+        <div class="tc-btns"><button onclick="openTour('evora')">Ver Detalhes</button></div>
+      </div>
+    </div>
+
+    <div class="tc fade-in" style="transition-delay:.18s" data-dest="Sesimbra" data-x="50" data-y="235">
+      <div class="tc-num">04</div>
+      <div class="tc-body">
+        <div class="tc-tag">Tour Privado</div>
+        <div class="tc-name">Sesimbra</div>
+        <div class="tc-meta">⏱ 6–7h &nbsp;·&nbsp; ~40 km · ~40min</div>
+        <div class="tc-extra">+ Arrábida · Cabo Espichel · Setúbal</div>
+        <div class="tc-btns"><button onclick="openTour('sesimbra')">Ver Detalhes</button></div>
+      </div>
+    </div>
+
+    <div class="tc fade-in" style="transition-delay:.24s" data-dest="Porto" data-x="68" data-y="68">
+      <div class="tc-num">05</div>
+      <div class="tc-body">
+        <div class="tc-tag">🌙 2 Dias</div>
+        <div class="tc-name">Porto</div>
+        <div class="tc-meta">⏱ 2 Dias &nbsp;·&nbsp; ~310 km · ~3h</div>
+        <div class="tc-extra">Dia 1: Porto · Dia 2: Guimarães + Braga</div>
+        <div class="tc-btns"><button onclick="openTour('porto')">Ver Detalhes</button></div>
+      </div>
+    </div>
+
+    <div class="tc fade-in" style="transition-delay:.30s" data-dest="Algarve" data-x="95" data-y="300">
+      <div class="tc-num">06</div>
+      <div class="tc-body">
+        <div class="tc-tag">🌙 2 Dias</div>
+        <div class="tc-name">Algarve</div>
+        <div class="tc-meta">⏱ 2 Dias &nbsp;·&nbsp; ~280 km · ~2h30</div>
+        <div class="tc-extra">Dia 1: Benagil, Lagos · Dia 2: Sagres, Faro</div>
+        <div class="tc-btns"><button onclick="openTour('algarve')">Ver Detalhes</button></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* ——— COMPACT TOUR CARDS ——— */
+.tc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.tc {
+  display: flex; align-items: center; gap: 1rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 1.1rem 1.2rem;
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+  position: relative;
+}
+.tc:hover {
+  box-shadow: 0 8px 28px rgba(184,137,30,0.14);
+  transform: translateY(-3px);
+  border-color: var(--gold);
+}
+.tc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--gold-pale);
+  -webkit-text-stroke: 1.5px var(--gold-light);
+  line-height: 1; flex-shrink: 0; width: 2rem; text-align: center;
+  transition: color 0.25s;
+}
+.tc:hover .tc-num { color: rgba(184,137,30,0.15); -webkit-text-stroke-color: var(--gold); }
+.tc-body { flex: 1; }
+.tc-tag {
+  font-size: 0.58rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.25rem;
+}
+.tc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 500; color: var(--dark); line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+.tc-meta { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.2rem; }
+.tc-extra {
+  font-size: 0.67rem; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  opacity: 0.8;
+}
+.tc-btns { display:flex; gap:0.4rem; margin-top:0.6rem; }
+.tc-btns button {
+  font-size:0.62rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  padding:0.3rem 0.7rem; border:1px solid var(--gold); background:transparent;
+  color:var(--gold); cursor:pointer; font-family:'DM Sans',sans-serif;
+  transition:background 0.15s, color 0.15s;
+}
+.tc-btns button:hover { background:var(--gold); color:#fff; }
+.tc-arrow {
+  font-size: 1rem; color: var(--gold-light);
+  transition: transform 0.25s, color 0.25s; flex-shrink: 0;
+}
+.tc:hover .tc-arrow { transform: translateX(4px); color: var(--gold); }
+
+/* ——— MAP TOOLTIP ——— */
+#map-tooltip {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+#map-tooltip.visible { display: block; }
+#map-tooltip-inner {
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  padding: 0.8rem;
+  width: 170px;
+  border-radius: 2px;
+}
+#portugal-svg { width: 100%; display: block; }
+#map-dest-label {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem; font-weight: 500;
+  color: var(--dark); margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+@media(max-width: 768px) {
+  #map-tooltip { display: none !important; }
+}
+@media(max-width: 1024px) {
+  .tc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+
+<!-- PORQUE NÓS -->
+<section class="section section-alt" id="porque-nos">
+  <div class="section-header">
+    <span class="section-label">Porquê a AZIMUTE</span>
+    <h2 class="section-title">A diferença está <em>nos detalhes</em></h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-item fade-in">
+      <div class="why-icon">🚗</div>
+      <h3 class="why-title">Veículo Privado Exclusivo</h3>
+      <p class="why-text">O seu grupo tem o veículo só para si. Sem partilha com outros turistas, sem horários fixos impostos. O tour adapta-se a si, não o contrário.</p>
+    </div>
+    <div class="why-item fade-in" style="transition-delay:0.1s">
+      <div class="why-icon">📍</div>
+      <h3 class="why-title">Partida à Sua Porta</h3>
+      <p class="why-text">Recolha no seu hotel, apartamento ou qualquer local em Lisboa e arredores. Sem deslocações para pontos de encontro, sem stress de transporte.</p>
+    </div>
+    <div class="why-item fade-in" style="transition-delay:0.2s">
+      <div class="why-icon">⏰</div>
+      <h3 class="why-title">Horários Flexíveis</h3>
+      <p class="why-text">Quer sair às 7h ou às 9h? Quer ficar mais tempo num determinado local? Com a AZIMUTE, o itinerário é seu — basta dizer.</p>
+    </div>
+    <div class="why-item fade-in" style="transition-delay:0.1s">
+      <div class="why-icon">💬</div>
+      <h3 class="why-title">Contacto Direto Sempre</h3>
+      <p class="why-text">Fale diretamente com o Rui, sem call centers nem intermediários. WhatsApp disponível para qualquer questão antes, durante ou após o tour.</p>
+    </div>
+    <div class="why-item fade-in" style="transition-delay:0.2s">
+      <div class="why-icon">🗺</div>
+      <h3 class="why-title">Conhecimento Local Genuíno</h3>
+      <p class="why-text">Recomendações de restaurantes, segredos locais e percursos alternativos que não encontra nos guias. Experiências autênticas, não turísticas.</p>
+    </div>
+    <div class="why-item fade-in" style="transition-delay:0.3s">
+      <div class="why-icon">🌍</div>
+      <h3 class="why-title">Grupos de Qualquer Dimensão</h3>
+      <p class="why-text">Casais, famílias, grupos de amigos ou viagens de empresa. Adaptamos a capacidade do veículo e o itinerário ao tamanho e às necessidades do seu grupo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFERS -->
+<section class="section" id="transfers">
+  <div class="section-header">
+    <span class="section-label">Serviço de Transporte</span>
+    <h2 class="section-title">Transfers <em>Privados</em></h2>
+    <p class="section-subtitle">Transporte pontual e confortável a partir de Lisboa e arredores para os principais destinos de Portugal.</p>
+  </div>
+  <div class="transfers-grid">
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Fátima')">
+      <div class="transfer-tile-icon">🕊</div>
+      <div class="transfer-tile-name">Fátima</div>
+      <div class="transfer-tile-km">~130 km · ~1h30</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Sintra')">
+      <div class="transfer-tile-icon">🏰</div>
+      <div class="transfer-tile-name">Sintra</div>
+      <div class="transfer-tile-km">~30 km · ~30min</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Évora')">
+      <div class="transfer-tile-icon">🏛</div>
+      <div class="transfer-tile-name">Évora</div>
+      <div class="transfer-tile-km">~130 km · ~1h30</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Sesimbra')">
+      <div class="transfer-tile-icon">⛵</div>
+      <div class="transfer-tile-name">Sesimbra</div>
+      <div class="transfer-tile-km">~40 km · ~40min</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Porto')">
+      <div class="transfer-tile-icon">🌉</div>
+      <div class="transfer-tile-name">Porto</div>
+      <div class="transfer-tile-km">~310 km · ~3h</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Algarve')">
+      <div class="transfer-tile-icon">🌊</div>
+      <div class="transfer-tile-name">Algarve</div>
+      <div class="transfer-tile-km">~280 km · ~2h30</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Ericeira')">
+      <div class="transfer-tile-icon">🏄</div>
+      <div class="transfer-tile-name">Ericeira</div>
+      <div class="transfer-tile-km">~50 km · ~45min</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Faro')">
+      <div class="transfer-tile-icon">✈️</div>
+      <div class="transfer-tile-name">Faro</div>
+      <div class="transfer-tile-km">~280 km · ~2h30</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Setúbal')">
+      <div class="transfer-tile-icon">🌿</div>
+      <div class="transfer-tile-name">Setúbal</div>
+      <div class="transfer-tile-km">~50 km · ~45min</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+    <div class="transfer-tile fade-in" onclick="openModal('Transfer Grândola')">
+      <div class="transfer-tile-icon">🌾</div>
+      <div class="transfer-tile-name">Grândola</div>
+      <div class="transfer-tile-km">~120 km · ~1h15</div>
+      <div class="transfer-tile-tag">Transfer Privado</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section-alt">
+  <div class="section-header">
+    <span class="section-label">Clientes</span>
+    <h2 class="section-title">O que dizem <em>os nossos clientes</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"O Rui foi absolutamente fantástico. Conhece cada canto de Sintra e tornou o dia completamente especial. Recomendo sem hesitar a qualquer pessoa que visite Portugal."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">M</div>
+        <div>
+          <div class="testimonial-name">Maria & Carlos</div>
+          <div class="testimonial-trip">Tour Sintra · Dia Completo</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial fade-in" style="transition-delay:0.1s">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Fizemos o tour de dois dias ao Porto com a família. Cada detalhe foi pensado, desde a recolha até ao regresso. O Guimarães foi uma surpresa incrível que nunca planeámos visitar!"</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">J</div>
+        <div>
+          <div class="testimonial-name">Família Johnson</div>
+          <div class="testimonial-trip">Tour Porto · 2 Dias</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial fade-in" style="transition-delay:0.2s">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Precisámos de transfer para Fátima com um grupo de 8 pessoas. Pontualidade exemplar, veículo impecável e o Rui ainda nos deu dicas incríveis sobre a região. Obrigado!"</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">A</div>
+        <div>
+          <div class="testimonial-name">Grupo Andrade</div>
+          <div class="testimonial-trip">Transfer Fátima</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="section" id="reservar">
+  <div class="booking-wrap">
+    <div class="booking-intro fade-in">
+      <span class="section-label">Reservas</span>
+      <h2 class="section-title">Reserve a sua <em>experiência</em></h2>
+      <p class="section-subtitle" style="margin-top:1rem">Escolha a data, preencha o formulário e receba confirmação em menos de 24 horas. Para dúvidas imediatas, contacte-nos via WhatsApp.</p>
+      <div class="booking-features">
+        <div class="booking-feature">
+          <div class="booking-feature-icon">✓</div>
+          <div>
+            <div class="booking-feature-title">Confirmação Rápida</div>
+            <div class="booking-feature-text">Resposta em menos de 24 horas com confirmação e todos os detalhes da sua reserva.</div>
+          </div>
+        </div>
+        <div class="booking-feature">
+          <div class="booking-feature-icon">🔒</div>
+          <div>
+            <div class="booking-feature-title">Sem Pagamento Antecipado</div>
+            <div class="booking-feature-text">Combine os detalhes primeiro. O pagamento é acordado diretamente antes do tour.</div>
+          </div>
+        </div>
+        <div class="booking-feature">
+          <div class="booking-feature-icon">↩</div>
+          <div>
+            <div class="booking-feature-title">Cancelamento Flexível</div>
+            <div class="booking-feature-text">Planos mudaram? Contacte-nos com antecedência. Tentamos sempre encontrar uma solução.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-panel fade-in" style="transition-delay:0.15s">
+      <div class="booking-panel-header">Pedido de Reserva</div>
+      <div class="booking-panel-body">
+        <div class="cal-header">
+          <button class="cal-nav" id="prev-m">&#8249;</button>
+          <span class="cal-month-label" id="cal-lbl"></span>
+          <button class="cal-nav" id="next-m">&#8250;</button>
+        </div>
+        <div class="cal-weekdays">
+          <div class="cal-wd">D</div><div class="cal-wd">S</div><div class="cal-wd">T</div>
+          <div class="cal-wd">Q</div><div class="cal-wd">Q</div><div class="cal-wd">S</div><div class="cal-wd">S</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-display" id="cal-display">Selecione uma data para o tour ou transfer</div>
+        <div class="form-sep"></div>
+        <div class="frow"><label>Nome Completo</label><input type="text" id="f-name" placeholder="O seu nome completo"></div>
+        <div class="frow-2">
+          <div class="frow"><label>Telemóvel</label><input type="text" id="f-phone" placeholder="+351 …"></div>
+          <div class="frow"><label>Nº Pessoas</label><input type="number" id="f-pax" placeholder="1" min="1"></div>
+        </div>
+        <div class="frow">
+          <label>Serviço Pretendido</label>
+          <select id="f-service">
+            <option value="">— Selecione o serviço —</option>
+            <optgroup label="TOURS">
+              <option>Tour Fátima (6–7h)</option>
+              <option>Tour Fátima — Dia Completo (11–12h)</option>
+              <option>Tour Sintra (6–7h)</option>
+              <option>Tour Sintra — Dia Completo (11–12h)</option>
+              <option>Tour Évora (6–7h)</option>
+              <option>Tour Évora — Dia Completo (11–12h)</option>
+              <option>Tour Sesimbra (6–7h)</option>
+              <option>Tour Sesimbra — Dia Completo (11–12h)</option>
+              <option>Tour Porto — 2 Dias</option>
+              <option>Tour Algarve — 2 Dias</option>
+            </optgroup>
+            <optgroup label="TRANSFERS">
+              <option>Transfer Fátima</option><option>Transfer Sintra</option><option>Transfer Évora</option>
+              <option>Transfer Sesimbra</option><option>Transfer Porto</option><option>Transfer Algarve</option>
+              <option>Transfer Ericeira</option><option>Transfer Faro</option><option>Transfer Setúbal</option><option>Transfer Grândola</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="frow"><label>Notas / Local de Recolha</label><textarea id="f-notes" placeholder="Hotel, apartamento, ponto de encontro ou outras informações úteis…"></textarea></div>
+        <button class="form-submit" onclick="submitForm()">Enviar Pedido via WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-strip" id="contacto">
+  <div class="contact-left fade-in">
+    <h2 class="contact-title">Fale connosco<br><em>quando quiser</em></h2>
+    <p class="contact-sub">Tem dúvidas sobre um tour ou precisa de um orçamento personalizado? O Rui responde pessoalmente a todas as mensagens — sem bots, sem esperas.</p>
+  </div>
+  <div class="contact-right fade-in" style="transition-delay:0.15s">
+    <div class="contact-detail">
+      <div class="contact-detail-icon">👤</div>
+      <div>
+        <div class="contact-detail-label">Responsável</div>
+        <div class="contact-detail-value">Rui Ratinho</div>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">📞</div>
+      <div>
+        <div class="contact-detail-label">Telemóvel</div>
+        <div class="contact-detail-value"><a href="tel:+351967403285">+351 967 403 285</a></div>
+      </div>
+    </div>
+    <a href="https://wa.me/351967403285" target="_blank" class="contact-wa-big">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar Mensagem no WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-brand">AZIMUTE</div>
+    <div class="footer-sub">by 360 Mobility · Tours & Transfers · Lisboa & Arredores</div>
+  </div>
+  <div class="footer-right">
+    +351 967 403 285 · Rui Ratinho<br>
+    © 2025 AZIMUTE by 360 Mobility
+  </div>
+</footer>
+
+<!-- TOUR DETAIL PANEL -->
+<div class="td-overlay" id="td-overlay" onclick="if(event.target===this)closeTour()"></div>
+<div class="td-panel" id="td-panel">
+  <button class="td-close" onclick="closeTour()">✕ Fechar</button>
+  <div class="td-scroll">
+
+    <!-- HEADER -->
+    <div class="td-header" id="td-header">
+      <div class="td-header-content">
+        <div class="td-tag" id="td-tag"></div>
+        <h2 class="td-title" id="td-title"></h2>
+        <div class="td-meta-row" id="td-meta-row"></div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="td-body">
+
+      <!-- ABOUT -->
+      <div class="td-section" id="td-about"></div>
+
+      <!-- ITINERARY -->
+      <div class="td-section">
+        <h3 class="td-section-title">Itinerário</h3>
+        <div class="td-itinerary" id="td-itinerary"></div>
+      </div>
+
+      <!-- INCLUDES -->
+      <div class="td-section">
+        <h3 class="td-section-title">O que inclui</h3>
+        <div class="td-includes">
+          <div class="td-inc-item">✓ Transporte privado</div>
+          <div class="td-inc-item">✓ Horários flexíveis</div>
+          <div class="td-inc-item">✓ Garrafa de água por pessoa</div>
+          <div class="td-inc-item">✓ WiFi gratuito no veículo</div>
+          <div class="td-inc-item">✓ Bolsa de primeiros socorros</div>
+          <div class="td-inc-item">✓ Fotografias e filmagem do tour</div>
+          <div class="td-inc-item">✗ Refeições</div>
+          <div class="td-inc-item">✗ Tickets de museus e monumentos</div>
+          <div class="td-inc-item" id="td-hotel-row" style="display:none">✗ Alojamento (2 dias)</div>
+        </div>
+      </div>
+
+      <!-- PRICING -->
+      <div class="td-section">
+        <div class="td-calc">
+          <div class="td-calc-left">
+            <div class="td-calc-label">Quantas pessoas?</div>
+            <div class="td-calc-stepper">
+              <button class="td-step-btn" id="td-step-minus" onclick="changePax(-1)">−</button>
+              <div class="td-step-val" id="td-pax-val">2</div>
+              <button class="td-step-btn" id="td-step-plus" onclick="changePax(1)">+</button>
+            </div>
+            <div class="td-calc-vehicles" id="td-calc-vehicles">🚗 1 veículo</div>
+          </div>
+          <div class="td-calc-divider"></div>
+          <div class="td-calc-right">
+            <div class="td-calc-label">Preço total do grupo</div>
+            <div class="td-calc-price" id="td-calc-price">—</div>
+            <div class="td-calc-pp" id="td-calc-pp"></div>
+          </div>
+        </div>
+
+        <a href="#reservar" class="td-calc-reserve" id="td-calc-reserve-btn" onclick="closeTour()">
+          Reservar para <span id="td-calc-reserve-pax">1</span> pessoa — <span id="td-calc-reserve-price"></span>
+        </a>
+      </div>
+
+      <!-- CTA -->
+      <div class="td-cta">
+        <a href="https://wa.me/351967403285" target="_blank" class="btn-wa-small">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir Orçamento via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ——— TOUR DETAIL PANEL ——— */
+.td-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(26,18,8,0.55); backdrop-filter:blur(4px);
+  z-index:1000;
+}
+.td-overlay.open { display:block; }
+.td-panel {
+  position:fixed; top:0; right:-100%; width:min(680px,100vw); height:100vh;
+  background:#fff; z-index:1001;
+  box-shadow:-20px 0 60px rgba(0,0,0,0.15);
+  transition:right 0.4s cubic-bezier(0.32,0,0.15,1);
+  display:flex; flex-direction:column;
+}
+.td-panel.open { right:0; }
+.td-close {
+  position:absolute; top:1rem; right:1.2rem; z-index:10;
+  background:rgba(255,255,255,0.9); border:1px solid var(--border);
+  padding:0.4rem 0.9rem; font-size:0.72rem; font-weight:500;
+  letter-spacing:0.1em; color:var(--mid); cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:background 0.2s, color 0.2s;
+}
+.td-close:hover { background:var(--gold); color:#fff; border-color:var(--gold); }
+.td-scroll { overflow-y:auto; height:100%; }
+.td-header {
+  min-height:200px; position:relative;
+  background:linear-gradient(160deg, var(--dark) 0%, #2a1f0e 100%);
+  display:flex; align-items:flex-end;
+}
+.td-header-content { padding:2.5rem 2.5rem 2rem; position:relative; z-index:2; width:100%; }
+.td-tag {
+  font-size:0.62rem; font-weight:600; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold-light); margin-bottom:0.5rem;
+}
+.td-title {
+  font-family:'Playfair Display',serif; font-size:2rem; font-weight:500;
+  color:#fff; line-height:1.15; margin-bottom:1rem;
+}
+.td-meta-row { display:flex; gap:1.5rem; flex-wrap:wrap; }
+.td-meta-item {
+  font-size:0.75rem; color:rgba(255,255,255,0.65);
+  display:flex; align-items:center; gap:0.4rem;
+}
+.td-meta-item strong { color:#fff; }
+.td-body { padding:2rem 2.5rem; }
+.td-section { margin-bottom:2.2rem; padding-bottom:2.2rem; border-bottom:1px solid var(--border); }
+.td-section:last-child { border-bottom:none; }
+.td-section-title {
+  font-family:'Playfair Display',serif; font-size:1rem; font-weight:500;
+  color:var(--dark); margin-bottom:1.2rem;
+}
+.td-about-text { font-size:0.88rem; line-height:1.85; color:var(--mid); }
+
+/* ITINERARY */
+.td-itin-row { display:flex; align-items:center; gap:0.8rem; }
+.td-itin-dot {
+  width:12px; height:12px; border-radius:50%; flex-shrink:0;
+  background:var(--gold); border:2px solid #fff; box-shadow:0 0 0 2px var(--gold);
+}
+.td-itin-dot.start { background:var(--dark); box-shadow:0 0 0 2px var(--dark); }
+.td-itin-dot.end { background:var(--gold-dark); box-shadow:0 0 0 2px var(--gold-dark); }
+.td-itin-label { font-size:0.82rem; font-weight:500; color:var(--dark); }
+.td-itin-label em { font-style:normal; color:var(--muted); font-weight:300; }
+.td-itin-line { width:2px; height:14px; background:var(--border); margin-left:5px; }
+.td-itin-visits { padding:0.5rem 0 0.5rem 1.6rem; display:flex; flex-direction:column; gap:0.5rem; }
+.td-itin-visit { font-size:0.85rem; color:var(--mid); }
+.td-itin-optional { color:var(--muted); font-style:italic; }
+
+/* INCLUDES */
+.td-includes { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+.td-inc-item { font-size:0.8rem; color:var(--mid); padding:0.4rem 0; }
+.td-inc-item:not([style*="none"]) { display:flex; gap:0.4rem; }
+
+/* PRICING NOTE */
+.td-price-note { font-size:0.72rem; color:var(--muted); margin-bottom:0; }
+
+/* CTA */
+.td-cta { display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:0.5rem; }
+
+/* CALCULATOR */
+.td-calc {
+  display:flex; align-items:stretch; gap:0;
+  border:1px solid var(--border); overflow:hidden;
+  margin-top:1rem; margin-bottom:1rem;
+  background:#fff;
+}
+.td-calc-left { padding:1.4rem 1.6rem; flex:1; }
+.td-calc-divider { width:1px; background:var(--border); }
+.td-calc-right {
+  padding:1.4rem 1.6rem; flex:1; text-align:center;
+  background:var(--gold-pale);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.td-calc-label {
+  font-size:0.62rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:0.8rem;
+}
+.td-calc-stepper {
+  display:flex; align-items:center; border:1px solid var(--border); width:fit-content;
+}
+.td-step-btn {
+  width:40px; height:40px; background:#fff; border:none;
+  font-size:1.3rem; color:var(--gold); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s, color 0.15s; font-weight:400; line-height:1;
+}
+.td-step-btn:hover:not(:disabled) { background:var(--gold); color:#fff; }
+.td-step-btn:disabled { opacity:0.25; cursor:not-allowed; }
+.td-step-val {
+  width:52px; height:40px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:500; color:var(--dark);
+  border-left:1px solid var(--border); border-right:1px solid var(--border);
+  background:#fafafa; user-select:none;
+}
+.td-calc-vehicles { font-size:0.72rem; color:var(--muted); margin-top:0.7rem; }
+.td-calc-vehicles.two { color:var(--gold-dark); font-weight:500; }
+.td-calc-price {
+  font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:500;
+  color:var(--gold-dark); line-height:1; transition:transform 0.15s;
+}
+.td-calc-price.bump { transform:scale(1.1); }
+.td-calc-pp { font-size:0.72rem; color:var(--muted); margin-top:0.4rem; }
+.td-calc-reserve {
+  display:flex; align-items:center; justify-content:center;
+  width:100%; background:var(--gold); color:#fff;
+  padding:0.95rem 1.5rem;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase;
+  text-decoration:none; transition:background 0.2s;
+}
+.td-calc-reserve:hover { background:var(--gold-dark); }
+.btn-wa-small {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background:#25D366; color:#fff;
+  padding:0.8rem 1.5rem;
+  font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;
+  text-decoration:none; transition:background 0.2s; border:none; cursor:pointer;
+}
+.btn-wa-small:hover { background:#1ebe5d; }
+
+
+
+</style>
+
+<script>
+// NAV scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY>40);
+});
+
+// Menu mobile
+function toggleMenu(){
+  const links = document.querySelector('.nav-links');
+  const isOpen = links.classList.contains('mobile-open');
+  if(isOpen){
+    links.classList.remove('mobile-open');
+    links.style.cssText = '';
+  } else {
+    links.classList.add('mobile-open');
+    links.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#fff;padding:1.5rem 4vw 2rem;border-bottom:2px solid rgba(184,137,30,0.2);z-index:998;gap:1.2rem;box-shadow:0 8px 30px rgba(0,0,0,0.08);';
+  }
+}
+
+// ——— PRICING ENGINE ———
+const BASE = [340, 360,380,400,420,440, 620,640,660,680,700,720, 1000,1020,1040,1060];
+// index 0=1p, 1=2p ... 5=6p, 6=7p ... 11=12p, 12=13p ... 15=16p
+function calcPrices(mult) {
+  return BASE.map(p => Math.round(p * mult / 10) * 10);
+}
+
+// ——— TOUR DATA ———
+const TOURS = {
+  'fatima-meio': {
+    tag: 'Tour Privado · 01',
+    title: 'Fátima — Meio Dia',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'6–7 horas'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~130 km · ~1h30'},
+    ],
+    about: 'Uma visita ao Santuário de Fátima é uma experiência única, seja por devoção ou por interesse cultural e histórico. Partindo de Lisboa, chegamos a Fátima com tempo suficiente para explorar a Basílica de Nossa Senhora do Rosário, a Capelinha das Aparições e o imponente Santuário, um dos maiores centros de peregrinação do mundo.',
+    itinerary: [
+      {time:'Manhã', name:'Partida de Lisboa (~130 km · ~1h30)', desc:'', type:'start'},
+      {time:'Chegada', name:'Fátima (3–4 horas de visita)', desc:'', type:''},
+      {time:'A visitar', name:'Nova Basílica de Nossa Senhora de Fátima', desc:'', type:''},
+      {time:'', name:'Museu de Fátima', desc:'', type:''},
+      {time:'', name:'Capelinha das Aparições', desc:'', type:''},
+      {time:'', name:'Basílica de Nossa Senhora do Rosário', desc:'', type:''},
+      {time:'', name:'Capelas dos Pastorinhos & Anjo de Portugal', desc:'', type:''},
+      {time:'', name:'Tempo livre no Santuário', desc:'', type:''},
+      {time:'Opcional', name:'Almoço em Fátima (Opcional)', desc:'', type:''},
+      {time:'Regresso', name:'Retorno a Lisboa (~130 km · ~1h30)', desc:'Chegada prevista ao meio da tarde.', type:'end'},
+    ],
+    prices: calcPrices(1),
+    hotel: false,
+    bookLabel: 'Tour Fátima Meio Dia',
+  },
+  'fatima-dia': {
+    tag: 'Tour Privado · 01',
+    title: 'Fátima — Dia Completo',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'11–12 horas'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~200 km · ~2h'},
+    ],
+    about: 'O dia completo combina Fátima com três destinos extraordinários do centro de Portugal: o imponente Mosteiro da Batalha (Património UNESCO), a icónica vila de Nazaré com as suas ondas gigantes e pescadores tradicionais, e Óbidos, a vila medieval mais bem preservada de Portugal.',
+    itinerary: [
+      {time:'Manhã cedo', name:'Partida de Lisboa', desc:'Saída logo de manhã para aproveitar ao máximo o dia.', type:'start'},
+      {time:'~9h30', name:'Mosteiro da Batalha', desc:'Visita ao Mosteiro de Santa Maria da Vitória, obra-prima do gótico manuelino e Património UNESCO.', type:''},
+      {time:'~11h', name:'Santuário de Fátima', desc:'Visita à Capelinha das Aparições, Basílica e Santuário. Tempo para reflexão e exploração.', type:''},
+      {time:'~13h', name:'Nazaré', desc:'Almoço livre na vila piscatória. Vista panorâmica do Sítio e passeio pelo mercado de peixe.', type:''},
+      {time:'~15h30', name:'Óbidos', desc:'Passeio pelas ruas medievais desta vila amuralhada. Prova da famosa Ginjinha de Óbidos.', type:''},
+      {time:'~18h', name:'Regresso a Lisboa', desc:'Chegada prevista ao final da tarde / início da noite.', type:'end'},
+    ],
+    prices: calcPrices(1.3),
+    hotel: false,
+    bookLabel: 'Tour Fátima Dia Completo',
+  },
+  'sintra': {
+    tag: 'Tour Privado · 02',
+    title: 'Sintra Encantada',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'6–7 horas'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~30 km · ~30min'},
+    ],
+    about: 'Sintra é um destino de conto de fadas a apenas 30 minutos de Lisboa. Classificada como Património Mundial pela UNESCO, a vila é dominada por palácios coloridos, jardins românticos e quintas nobres escondidas entre as serras. Uma visita obrigatória para quem passa por Portugal.',
+    itinerary: [
+      {time:'Manhã', name:'Partida de Lisboa', desc:'Recolha no local combinado. Percurso pela Estrada de Sintra com vistas sobre o estuário do Tejo.', type:'start'},
+      {time:'~9h30', name:'Palácio da Pena', desc:'O ícone de Sintra. Palácio romântico no topo da Serra com vistas panorâmicas sobre o Atlântico.', type:''},
+      {time:'~11h', name:'Centro Histórico de Sintra', desc:'Palácio Nacional de Sintra, padaria histórica e ruas medievais. Prova das famosas travesseiras.', type:''},
+      {time:'~12h30', name:'Cabo da Roca (Dia Completo)', desc:'O ponto mais ocidental da Europa continental. Faróis, falésias e o Atlântico sem fim.', type:''},
+      {time:'~13h30', name:'Cascais & Estoril (Dia Completo)', desc:'Vila costeira elegante, casino e frente de mar. Almoço livre.', type:''},
+      {time:'~15h', name:'Regresso a Lisboa', desc:'Chegada prevista ao meio da tarde.', type:'end'},
+    ],
+    prices: calcPrices(0.8),
+    hotel: false,
+    bookLabel: 'Tour Sintra',
+  },
+  'evora': {
+    tag: 'Tour Privado · 03',
+    title: 'Évora & Alentejo',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'6–7 horas'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~130 km · ~1h30'},
+    ],
+    about: 'Évora é uma das cidades mais fascinantes de Portugal. Com mais de dois mil anos de história, é simultaneamente cidade romana, medieval e renascentista. O seu centro histórico, classificado como Património UNESCO, guarda tesouros como um templo romano do século I, uma catedral gótica e a incontornável Capela dos Ossos.',
+    itinerary: [
+      {time:'Manhã', name:'Partida de Lisboa', desc:'Atravessamos a Ponte 25 de Abril ou a Ponte Vasco da Gama em direção ao Alentejo.', type:'start'},
+      {time:'~10h', name:'Templo Romano de Évora', desc:'As colunas romanas mais bem preservadas da Península Ibérica, no coração de Évora.', type:''},
+      {time:'~10h30', name:'Catedral de Évora', desc:'Maior catedral medieval de Portugal. Claustro gótico e vistas do terraço sobre toda a cidade.', type:''},
+      {time:'~11h30', name:'Capela dos Ossos', desc:'A icónica Capela de São Francisco decorada com ossos e crânios de mais de 5000 monges.', type:''},
+      {time:'~12h30', name:'Almoço Livre', desc:'Sugestão: restaurantes típicos alentejanos no centro histórico com açorda e carne de porco alentejana.', type:''},
+      {time:'~14h', name:'Regresso a Lisboa', desc:'Chegada prevista ao meio da tarde.', type:'end'},
+    ],
+    prices: calcPrices(1),
+    hotel: false,
+    bookLabel: 'Tour Évora',
+  },
+  'sesimbra': {
+    tag: 'Tour Privado · 04',
+    title: 'Sesimbra & Arrábida',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'6–7 horas'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~40 km · ~40min'},
+    ],
+    about: 'Sesimbra é o segredo mais bem guardado a sul de Lisboa. Uma vila piscatória de charme autêntico, com uma baía de águas turquesa, Castelo dos Mouros no alto da colina e uma das melhores gastronomias de peixe fresco do país. Ideal para quem quer fugir ao turismo de massas.',
+    itinerary: [
+      {time:'Manhã', name:'Partida de Lisboa', desc:'Atravessamos a Ponte 25 de Abril em direção à Península de Setúbal.', type:'start'},
+      {time:'~10h', name:'Castelo de Sesimbra', desc:'Castelo dos Mouros com vista panorâmica sobre a baía e o Atlântico. Entrada gratuita.', type:''},
+      {time:'~11h', name:'Vila de Sesimbra', desc:'Passeio pela vila piscatória, mercado de peixe e frente de mar. As mais belas praias do litoral sul.', type:''},
+      {time:'~12h30', name:'Almoço Livre', desc:'Marisco fresco, peixe grelhado e linguado nos restaurantes típicos da baía.', type:''},
+      {time:'~14h', name:'Serra da Arrábida (Dia Completo)', desc:'Parque Natural com praias de água cristalina. Praias do Portinho, Galapinhos e vistas da serra.', type:''},
+      {time:'~16h', name:'Regresso a Lisboa', desc:'Chegada prevista ao meio da tarde.', type:'end'},
+    ],
+    prices: calcPrices(0.8),
+    hotel: false,
+    bookLabel: 'Tour Sesimbra',
+  },
+  'porto': {
+    tag: 'Tour Privado · 05 · 2 Dias',
+    title: 'Porto & Norte — 2 Dias',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'2 Dias'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~310 km · ~3h'},
+    ],
+    about: 'Porto é uma cidade que não se visita numa hora — merece ser vivida. Em dois dias exploramos a Invicta sem pressas: o bairro histórico da Ribeira, a mundialmente famosa Livraria Lello, os azulejos da Estação de São Bento e as caves de Vinho do Porto. No segundo dia, rumamos a Guimarães, berço de Portugal, e a Braga, cidade dos arcebispos.',
+    itinerary: [
+      {time:'Dia 1 · Manhã', name:'Lisboa → Porto (~3h)', desc:'Partida cedo de Lisboa. Chegada ao Porto a meio da manhã.', type:'start'},
+      {time:'Dia 1 · 11h', name:'Ribeira & Centro Histórico', desc:'Passeio pela Ribeira (Património UNESCO), Ponte D. Luís e vistas sobre Vila Nova de Gaia.', type:''},
+      {time:'Dia 1 · 13h', name:'Livraria Lello & São Bento', desc:'A livraria mais bela do mundo e os famosos painéis de azulejos da Estação de São Bento.', type:''},
+      {time:'Dia 1 · 15h', name:'Caves de Vinho do Porto', desc:'Visita e prova nas caves históricas de Vila Nova de Gaia. Sandeman, Graham\'s ou Taylor\'s.', type:''},
+      {time:'Dia 1 · Noite', name:'Pernoita no Porto', desc:'Alojamento por conta do cliente. Sugestões disponíveis mediante pedido.', type:''},
+      {time:'Dia 2 · 9h', name:'Guimarães', desc:'Berço de Portugal. Castelo, Paço dos Duques e centro histórico UNESCO.', type:''},
+      {time:'Dia 2 · 12h', name:'Braga', desc:'Bom Jesus do Monte, Sé Catedral e centro histórico da cidade dos arcebispos.', type:''},
+      {time:'Dia 2 · 15h', name:'Regresso a Lisboa (~3h)', desc:'Chegada prevista ao final da tarde.', type:'end'},
+    ],
+    prices: calcPrices(1.5),
+    hotel: true,
+    bookLabel: 'Tour Porto 2 Dias',
+  },
+  'algarve': {
+    tag: 'Tour Privado · 06 · 2 Dias',
+    title: 'Algarve Selvagem — 2 Dias',
+    meta: [
+      {icon:'⏱', label:'Duração do Tour', val:'2 Dias'},
+      {icon:'📍', label:'Partida', val:'Lisboa & Arredores'},
+      {icon:'🚗', label:'Distância e tempo estimado', val:'~280 km · ~2h30'},
+    ],
+    about: 'O Algarve é muito mais do que praias lotadas no verão. Em dois dias descobrimos o Algarve selvagem e autêntico: a Gruta de Benagil (uma das mais belas do mundo), as falésias douradas de Lagos, Sagres com a sua fortaleza histórica e o imponente Cabo de São Vicente — o ponto mais a sudoeste da Europa continental.',
+    itinerary: [
+      {time:'Dia 1 · Manhã', name:'Lisboa → Algarve (~3h)', desc:'Partida cedo de Lisboa em direção ao Algarve pelo IP1.', type:'start'},
+      {time:'Dia 1 · 11h', name:'Gruta de Benagil', desc:'A gruta mais famosa de Portugal, acessível de barco. Uma das 10 mais belas do mundo.', type:''},
+      {time:'Dia 1 · 13h', name:'Ponta da Piedade — Lagos', desc:'Falésias douradas e formações rochosas únicas. Almoço livre em Lagos.', type:''},
+      {time:'Dia 1 · 15h30', name:'Portimão & Praia da Rocha', desc:'Frente de mar de Portimão e a icónica Praia da Rocha com as suas falésias.', type:''},
+      {time:'Dia 1 · Noite', name:'Pernoita no Algarve', desc:'Alojamento por conta do cliente em Lagos, Portimão ou Albufeira.', type:''},
+      {time:'Dia 2 · 9h', name:'Fortaleza de Sagres', desc:'A fortaleza do Infante D. Henrique e a rosa dos ventos mais antiga de Portugal.', type:''},
+      {time:'Dia 2 · 10h30', name:'Cabo de São Vicente', desc:'O extremo sudoeste da Europa. Falésias de 75 metros, farol histórico e o fim do mundo conhecido.', type:''},
+      {time:'Dia 2 · 13h', name:'Faro — Centro Histórico', desc:'A capital do Algarve, com a Cidade Velha amuralhada e a famosa Igreja dos Ossos.', type:''},
+      {time:'Dia 2 · 15h', name:'Regresso a Lisboa (~3h)', desc:'Chegada prevista ao final da tarde.', type:'end'},
+    ],
+    prices: calcPrices(1.5),
+    hotel: true,
+    bookLabel: 'Tour Algarve 2 Dias',
+  },
+};
+
+// ——— CALCULATOR STATE ———
+let currentPrices = [];
+let currentPax = 2;
+
+function changePax(delta) {
+  const newPax = currentPax + delta;
+  if (newPax < 2 || newPax > 12) return;
+  currentPax = newPax;
+  updateCalc();
+}
+
+function changePax(delta) {
+  const newPax = currentPax + delta;
+  if (newPax < 1 || newPax > 16) return;
+  currentPax = newPax;
+  updateCalc();
+}
+
+function updateCalc() {
+  const idx = currentPax - 1; // array index: 1pax=0, 2pax=1...
+  const price = currentPrices[idx];
+  const paxEl = document.getElementById('td-pax-val');
+  const priceEl = document.getElementById('td-calc-price');
+  const ppEl = document.getElementById('td-calc-pp');
+  const vehiclesEl = document.getElementById('td-calc-vehicles');
+  const minusBtn = document.getElementById('td-step-minus');
+  const plusBtn = document.getElementById('td-step-plus');
+  const reserveBtn = document.getElementById('td-calc-reserve-btn');
+  const reservePax = document.getElementById('td-calc-reserve-pax');
+  const reservePrice = document.getElementById('td-calc-reserve-price');
+
+  if (!paxEl) return;
+
+  paxEl.textContent = currentPax;
+
+  // Price with bump animation
+  priceEl.classList.remove('bump');
+  void priceEl.offsetWidth;
+  priceEl.textContent = price + '€';
+  priceEl.classList.add('bump');
+  setTimeout(() => priceEl.classList.remove('bump'), 200);
+
+  // Per person
+  const pp = Math.round(price / currentPax);
+  ppEl.textContent = pp + '€ por pessoa';
+
+  // Vehicles
+  if (currentPax >= 13) {
+    vehiclesEl.textContent = '🚗🚗🚗 3 veículos';
+    vehiclesEl.classList.add('two');
+  } else if (currentPax >= 7) {
+    vehiclesEl.textContent = '🚗🚗 2 veículos';
+    vehiclesEl.classList.add('two');
+  } else {
+    vehiclesEl.textContent = '🚗 1 veículo';
+    vehiclesEl.classList.remove('two');
+  }
+
+  // Disable buttons at limits
+  minusBtn.disabled = currentPax <= 1;
+  plusBtn.disabled = currentPax >= 16;
+
+  // Reserve button
+  reservePax.textContent = currentPax;
+  reservePrice.textContent = price + '€';
+  // singular/plural
+  const btn = document.getElementById('td-calc-reserve-btn');
+  if (btn) btn.querySelector('span:first-of-type').textContent = currentPax;
+  const pessoasTxt = btn ? btn.childNodes : null;
+  if (btn) btn.innerHTML = btn.innerHTML.replace(/pessoa[s]?/, currentPax === 1 ? 'pessoa' : 'pessoas');
+}
+
+// ——— OPEN TOUR PANEL ———
+function openTour(key) {
+  const t = TOURS[key];
+  if (!t) return;
+
+  // Header
+  document.getElementById('td-tag').textContent = t.tag;
+  document.getElementById('td-title').textContent = t.title;
+
+  // Meta
+  document.getElementById('td-meta-row').innerHTML = t.meta.map(m =>
+    `<div class="td-meta-item">${m.icon} <strong>${m.val}</strong> ${m.label}</div>`
+  ).join('');
+
+  // About
+  document.getElementById('td-about').innerHTML =
+    `<p class="td-about-text">${t.about}</p>`;
+
+  // Itinerary — one dot, list with dashes
+  const stops = t.itinerary;
+  const partida = stops[0];
+  const regresso = stops[stops.length - 1];
+  const middle = stops.slice(1, -1);
+
+  // Separate arrival from visits
+  const chegada = middle.find(s => s.time === 'Chegada');
+  const visitas = middle.filter(s => s.time !== 'Chegada' && s.time !== 'Opcional');
+  const opcional = middle.find(s => s.time === 'Opcional');
+
+  const visitasHTML = chegada
+    ? `<div class="td-itin-row">
+        <div class="td-itin-dot"></div>
+        <div class="td-itin-label">${chegada.name}</div>
+       </div>
+       <div class="td-itin-line"></div>
+       <div class="td-itin-visits">
+         ${visitas.map(s => `<div class="td-itin-visit">— ${s.name}</div>`).join('')}
+         ${opcional ? `<div class="td-itin-visit td-itin-optional">— ${opcional.name}</div>` : ''}
+       </div>`
+    : `<div class="td-itin-visits">
+         ${middle.map(s => `<div class="td-itin-visit${s.time==='Opcional'?' td-itin-optional':''}">— ${s.name}</div>`).join('')}
+       </div>`;
+
+  document.getElementById('td-itinerary').innerHTML = `
+    <div class="td-itin-row">
+      <div class="td-itin-dot start"></div>
+      <div class="td-itin-label">${partida.time} — ${partida.name}</div>
+    </div>
+    <div class="td-itin-line"></div>
+    ${visitasHTML}
+    <div class="td-itin-line"></div>
+    <div class="td-itin-row">
+      <div class="td-itin-dot end"></div>
+      <div class="td-itin-label">${regresso.name}${regresso.desc ? ' · <em>'+regresso.desc+'</em>' : ''}</div>
+    </div>
+  `;
+
+  // Hotel row
+  document.getElementById('td-hotel-row').style.display = t.hotel ? 'flex' : 'none';
+
+
+  // Init calculator
+  currentPrices = t.prices;
+  currentPax = 1;
+  updateCalc();
+
+  // Open
+  document.getElementById('td-overlay').classList.add('open');
+  document.getElementById('td-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTour() {
+  document.getElementById('td-overlay').classList.remove('open');
+  document.getElementById('td-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ESC key to close
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeTour(); });
+
+// ——— COMPACT CARD CLICKS ———
+// Override the old openModal to openTour for .tc cards
+// (map tooltip cards already have click from the map JS, we reassign below)
+
+// ——— CALENDAR ———
+const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let cur=new Date(), sel=null;
+function renderCal(){
+  const y=cur.getFullYear(),m=cur.getMonth();
+  document.getElementById('cal-lbl').textContent=MONTHS[m]+' '+y;
+  const g=document.getElementById('cal-grid'); g.innerHTML='';
+  const first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate();
+  const today=new Date(); today.setHours(0,0,0,0);
+  for(let i=0;i<first;i++){const e=document.createElement('div');e.className='cal-cell empty';g.appendChild(e);}
+  for(let d=1;d<=days;d++){
+    const c=document.createElement('div'); c.className='cal-cell'; c.textContent=d;
+    const dt=new Date(y,m,d); dt.setHours(0,0,0,0);
+    if(dt<today)c.classList.add('past');
+    else if(dt.toDateString()===today.toDateString())c.classList.add('today');
+    if(sel&&dt.toDateString()===sel.toDateString())c.classList.add('selected');
+    if(dt>=today)c.addEventListener('click',()=>{
+      sel=dt;
+      document.getElementById('cal-display').textContent='📅 '+dt.toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+      renderCal();
+    });
+    g.appendChild(c);
+  }
+}
+document.getElementById('prev-m').onclick=()=>{cur.setMonth(cur.getMonth()-1);renderCal();};
+document.getElementById('next-m').onclick=()=>{cur.setMonth(cur.getMonth()+1);renderCal();};
+renderCal();
+
+// ——— FORM SUBMIT ———
+function submitForm(){
+  const name=document.getElementById('f-name').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const service=document.getElementById('f-service').value;
+  if(!name||!phone||!service){alert('Por favor preencha nome, telemóvel e serviço.');return;}
+  const date=sel?sel.toLocaleDateString('pt-PT'):'Data a definir';
+  const pax=document.getElementById('f-pax').value||'1';
+  const notes=document.getElementById('f-notes').value;
+  const msg=`*Pedido de Reserva – AZIMUTE*\n\n👤 *Nome:* ${name}\n📞 *Contacto:* ${phone}\n🗓 *Data:* ${date}\n🚗 *Serviço:* ${service}\n👥 *Pessoas:* ${pax}${notes?'\n📝 *Notas:* '+notes:''}`;
+  window.open('https://wa.me/351967403285?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ——— MAP TOOLTIP ———
+const tooltip = document.getElementById('map-tooltip');
+const dot = document.getElementById('map-dot');
+const dotPulse = document.getElementById('map-dot-pulse');
+const destLabel = document.getElementById('map-dest-label');
+
+document.querySelectorAll('.tc').forEach(card => {
+  card.addEventListener('mouseenter', function(e) {
+    const x = parseFloat(this.dataset.x);
+    const y = parseFloat(this.dataset.y);
+    const dest = this.dataset.dest;
+    if (!x || !y) return;
+    dot.setAttribute('cx', x); dot.setAttribute('cy', y); dot.setAttribute('opacity', '1');
+    dotPulse.setAttribute('cx', x); dotPulse.setAttribute('cy', y); dotPulse.setAttribute('opacity', '1');
+    destLabel.textContent = dest;
+    tooltip.classList.add('visible');
+    moveTooltip(e);
+  });
+  card.addEventListener('mousemove', moveTooltip);
+  card.addEventListener('mouseleave', function() {
+    tooltip.classList.remove('visible');
+    dot.setAttribute('opacity', '0');
+    dotPulse.setAttribute('opacity', '0');
+  });
+});
+
+function moveTooltip(e) {
+  const tw=186, th=240;
+  let left=e.clientX+18, top=e.clientY-th/2;
+  if(left+tw>window.innerWidth-10) left=e.clientX-tw-18;
+  if(top<10) top=10;
+  if(top+th>window.innerHeight-10) top=window.innerHeight-th-10;
+  tooltip.style.left=left+'px'; tooltip.style.top=top+'px';
+}
+
+// ——— SCROLL ANIMATIONS ———
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting)e.target.classList.add('visible'); });
+},{threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
